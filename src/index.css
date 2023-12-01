@@ -8,7 +8,25 @@ html,
 body,
 :root {
   height: 100%;
-  margin: 0;
+  background-color: #110b0b;
 }
 
+.trow:nth-child(odd) {
+  background-color: #171d2399
+}
+
+.trow:nth-child(even) {
+  background-color: rgb(17, 11, 11, 1);
+}
+
+@layer base {
+  :root {
+    --border: 214.3 31.8% 91.4%;
+  }
+
+  .dark {
+    --border: 217.2 32.6% 17.5%;
+
+  }
+}
 
