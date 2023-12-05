@@ -6,17 +6,30 @@ import useCurrencyStore from "../store/useCurrencyStore";
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
+const testData = [
+  { ccy: "CHF", base_ccy: "UAH", buy: "40.79370", sale: "40.79370" },
+  { ccy: "CZK", base_ccy: "UAH", buy: "1.60990", sale: "1.60990" },
+  { ccy: "GBP", base_ccy: "UAH", buy: "45.18820", sale: "45.18820" },
+  { ccy: "ILS", base_ccy: "UAH", buy: "9.71310", sale: "9.71310" },
+  { ccy: "JPY", base_ccy: "UAH", buy: "0.24425", sale: "0.24425" },
+  { ccy: "NOK", base_ccy: "UAH", buy: "3.38160", sale: "3.38160" },
+  { ccy: "PLZ", base_ccy: "UAH", buy: "9.04070", sale: "9.04070" },
+  { ccy: "SEK", base_ccy: "UAH", buy: "3.45990", sale: "3.45990" },
+];
+
 const CurrencyTable = () => {
   const { data, error } = useSWR(process.env.REACT_APP_API_URL, fetcher);
   const { currencyTableData, setCurrencyTableData } = useCurrencyStore();
 
   useEffect(() => {
     if(data){
-      setCurrencyTableData(data)
+      setCurrencyTableData(data);
+    } else {
+      setCurrencyTableData(testData);
     }
   },[data, setCurrencyTableData])
  
-  if (error) return <div>Error loading data</div>;
+  if (error) return <div className="text-white">Error loading data</div>;
   if (!currencyTableData) return <div>Loading...</div>;
   
   return (
@@ -25,7 +38,7 @@ const CurrencyTable = () => {
         <div className="overflow-x-auto shadow-md">
           <div className="inline-block min-w-full align-middle">
             <div className="overflow-hidden">
-              <table className="min-w-full divide-y divide-gray-200">
+              <table className="min-w-full divide-y divide-gray-200 border-b dark:border-darker-gray border-smoke">
                 <thead>
                   <tr className="trow w-full rounded-md p-1 font-light grid grid-cols-3">
                     <th
