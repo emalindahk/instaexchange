@@ -1,4 +1,11 @@
+import useCurrencyExchangeStore from "../../store/useCurrencyExchangeStore";
+
 const CurrencySwapButton = () => {
+  const { setBaseCurrency } = useCurrencyExchangeStore();
+
+  const handleSwap = () => {
+   setBaseCurrency()
+  }
   return (
     <div className="relative mt-0 mb-3 flex items-center justify-center md:my-0">
       <div className="dark:bg-new-black bg-white absolute z-10 rounded-full">
@@ -6,6 +13,7 @@ const CurrencySwapButton = () => {
           className="dark:text-white text-new-black dark:border-white bg-white
         dark:bg-new-black dark:focus:shadow-outline-white focus:shadow-outline-new-black flex h-12
         w-12 items-center justify-center rounded-full border p-3 disabled:cursor-not-allowed group"
+        onClick={handleSwap}
         >
           <svg
             viewBox="0 0 18 16"

@@ -9,9 +9,9 @@ const CurrencyConverter = () => {
   return (
     <div className="max-w-sm mx-auto">
       <div className="flex flex-col gap-x-1 gap-y-1">
-        <CurrencyExchangePanel value={inputValue} label="change" />
+        <CurrencyExchangePanel label="change"/>
         <CurrencySwapButton />
-        <CurrencyExchangePanel label="get" value={inputValue} base={false} />
+        <CurrencyExchangePanel label="get"/>
       </div>
       <InstaButton type="button" label="Exchange" action={() => {}} />
     </div>

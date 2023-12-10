@@ -1,16 +1,23 @@
+import { ChangeEvent } from "react";
+import useCurrencyExchangeStore from "../store/useCurrencyExchangeStore";
 import CurrencyDropdown from "./inputs/CurrencyDropdown";
 
 interface CurrencyExchangePanelProps {
   label: "change" | "get";
-  value: number;
   base?: boolean;
 }
 
 const CurrencyExchangePanel: React.FC<CurrencyExchangePanelProps> = ({
   label,
-  value,
-  base = true,
 }) => {
+
+  const {baseCurrency, exchangeCurrency, amount, setAmount, exchangedAmount} = useCurrencyExchangeStore();
+  
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setAmount(parseInt(e.target.value));
+    exchangeCurrency();
+  };
+
   return (
     <div className="flex-1">
       <div className="mb-1">
@@ -42,14 +49,16 @@ const CurrencyExchangePanel: React.FC<CurrencyExchangePanelProps> = ({
                               type="number"
                               className="remove-arrow bg-transparent focus:outline-none w-24 mt-1 placeholder:text-smoke text-2xl"
                               placeholder="100"
-                              value={value}
+                              value={exchangedAmount ? exchangedAmount.toString() : amount.toString()}
+                              onChange={handleChange}
                             />
                           </div>
-                          {base ? (
+                          {baseCurrency && (
                             <div className="text flex w-auto items-center pr-2 text-left text-3xl md:text-3xl">
                               <span className="mr-2 font-bold">UAH</span>
                             </div>
-                          ) : (
+                          )}
+                          {!baseCurrency && (
                             <CurrencyDropdown />
                           )}
                         </div>

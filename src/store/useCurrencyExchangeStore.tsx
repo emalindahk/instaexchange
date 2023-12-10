@@ -2,10 +2,12 @@ import { create } from "zustand";
 import { Currency } from "../types";
 
 interface CurrencyExchangeStore {
+  baseCurrency: boolean;
   fromCurrency: Currency | null;
   toCurrency: Currency | null;
   amount: number;
   exchangedAmount: number | null;
+  setBaseCurrency: () => void;
   setFromCurrency: (currency: Currency) => void;
   setToCurrency: (currency: Currency) => void;
   setAmount: (amount: number) => void;
@@ -15,26 +17,27 @@ interface CurrencyExchangeStore {
 
 const useCurrencyExchangeStore = create<CurrencyExchangeStore>(
   (set) => ({
+    baseCurrency: true,
     fromCurrency: null,
     toCurrency: null,
     amount: 0,
     exchangedAmount: null,
+    setBaseCurrency: () => set((state) => ({baseCurrency: !state.baseCurrency})),
     setFromCurrency: (currency) => set({ fromCurrency: currency }),
     setToCurrency: (currency) => set({ toCurrency: currency }),
     setAmount: (amount) => set({ amount }),
     exchangeCurrency: () => {
       const { fromCurrency, toCurrency, amount } =
         useCurrencyExchangeStore.getState();
+        console.log('from currency', fromCurrency)
+      
+        // const fromCurrencyRate = parseFloat(fromCurrency?.buy);
+        // const toCurrencyRate = parseFloat(toCurrency.sale);
 
-      if (fromCurrency && toCurrency) {
-        // Implement currency exchange logic here
-        // Calculate exchanged amount based on exchange rates
-        const exchangeRate =
-          parseFloat(toCurrency.buy) / parseFloat(fromCurrency.buy);
-        const exchangedAmount = amount * exchangeRate;
+        // const exchangedAmount = amount * (toCurrencyRate / fromCurrencyRate);
+        // console.log('exchangedAmount',exchangedAmount)
 
-        set({ exchangedAmount });
-      }
+        // set({ exchangedAmount });
     },
     swapCurrencies: () => {
       const { fromCurrency, toCurrency } = useCurrencyExchangeStore.getState();
